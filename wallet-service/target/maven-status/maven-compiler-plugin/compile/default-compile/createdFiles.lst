@@ -1,0 +1,7 @@
+com/example/wallet/service/WalletService.class
+com/example/wallet/WalletServiceApplication.class
+com/example/wallet/model/Wallet.class
+com/example/wallet/dto/CreditRequest.class
+com/example/wallet/repository/WalletRepository.class
+com/example/wallet/controller/WalletController.class
+com/example/wallet/dto/DebitRequest.class
