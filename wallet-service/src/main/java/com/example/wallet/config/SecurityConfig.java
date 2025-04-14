@@ -11,18 +11,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/**") // Match all endpoints
+                .csrf(csrf -> csrf.disable()) // Disable CSRF protection for APIs
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                "/h2-console/**",  // Allow access to H2 console
-                                "/v3/api-docs/**", // Allow access for Swagger endpoints
-                                "/swagger-ui/**",  // Allow access for Swagger UI
-                                "/swagger-ui.html" // Allow access for Swagger UI HTML page
-                        ).permitAll()
-                        .anyRequest().authenticated() // Secure all other endpoints
+                                "/h2-console/**",   // Allow access to H2 console
+                                "/v3/api-docs/**",  // Allow Swagger API docs
+                                "/swagger-ui/**",   // Allow Swagger UI
+                                "/swagger-ui.html", // Allow Swagger UI HTML page
+                                "/api/wallet/**"    // Allow access to wallet APIs
+                        ).permitAll()            // Permit all above request matchers
+                        .anyRequest().authenticated() // Secure any other endpoints
                 )
-                .csrf(csrf -> csrf.disable()) // Explicitly disable CSRF protection
-                .headers(headers -> headers.frameOptions().disable()); // Allow frames for H2 console
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions
+                                .sameOrigin() // Allow frames from the same origin
+                        )
+                );
 
         return http.build();
     }

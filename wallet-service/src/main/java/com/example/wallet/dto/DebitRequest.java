@@ -5,5 +5,14 @@ import lombok.Data;
 @Data
 public class DebitRequest {
     private String userId;
-    private double amount;
+    private Double amount;
+    private String referenceId; // <- add this
+
+    public DebitRequest(String userId, double amount, String ref123) {
+        this.userId = userId;
+        this.amount = amount;
+        this.referenceId = ref123;
+    }
+
+    // Getters & setters
 }
